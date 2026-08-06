@@ -1,0 +1,10 @@
+let str = "Java Script";
+console.log(str);
+str = 'Usando Java Script';
+console.log(str);
+str = 2025;
+console.log(str);
+const disciplina = "Programação para a WEB";
+console.log(disciplina);
+disciplina = "PW";
+console.log(disciplina);
