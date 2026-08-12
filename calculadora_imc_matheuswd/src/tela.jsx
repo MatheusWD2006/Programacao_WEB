@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import calculaIMC from "./calcula_imc";
 
-function TelaIMC(props) {
-  
+function TelaIMC() {
+  const [peso, setPeso] = useState("");
+  const [altura, setAltura] = useState("");
+  const [resultado, setResultado] = useState(null);
+  const [erro, setErro] = useState("");
+
+  function tratarCalculo() {
+    setErro("");
+    setResultado(null);
+
+    const pesoNum = parseFloat(peso);
+    const alturaNum = parseFloat(altura);
+
+    if (!pesoNum || !alturaNum) {
+      setErro("Preencha peso e altura corretamente.");
+      return;
+    }
+
+    const res = calculaIMC(pesoNum, alturaNum);
+
+    if (res.erro) {
+      setErro(res.erro);
+    } else {
+      setResultado(res);
+    }
+  }
+
   const isVermelho =
-    props.resultado &&
-    (props.resultado.classificacao === "SOBREPESO" ||
-      props.resultado.classificacao === "OBESIDADE" ||
-      props.resultado.classificacao === "OBESIDADE GRAVE");
+    resultado &&
+    (resultado.classificacao === "SOBREPESO" ||
+      resultado.classificacao === "OBESIDADE" ||
+      resultado.classificacao === "OBESIDADE GRAVE");
 
   return (
     <div>
@@ -16,8 +42,8 @@ function TelaIMC(props) {
         <label>Peso (KG): </label>
         <input
           type="number"
-          value={props.peso}
-          onChange={(e) => props.setPeso(e.target.value)}
+          value={peso}
+          onChange={(e) => setPeso(e.target.value)}
         />
       </div>
 
@@ -25,20 +51,20 @@ function TelaIMC(props) {
         <label>Altura (m): </label>
         <input
           type="number"
-          value={props.altura}
-          onChange={(e) => props.setAltura(e.target.value)}
+          value={altura}
+          onChange={(e) => setAltura(e.target.value)}
         />
       </div>
 
-      <button onClick={props.aoCalcular}>Calcular</button>
+      <button onClick={tratarCalculo}>Calcular</button>
 
-      {props.erro && <p style={{ color: "red" }}>{props.erro}</p>}
+      {erro && <p style={{ color: "red" }}>{erro}</p>}
 
-      {props.resultado && (
+      {resultado && (
         <div>
-          <p>IMC: {props.resultado.imc.toFixed(2)}</p>
+          <p>IMC: {resultado.imc.toFixed(2)}</p>
           <p style={{ color: isVermelho ? "red" : "blue" }}>
-            Classificação: {props.resultado.classificacao}
+            Classificação: {resultado.classificacao}
           </p>
         </div>
       )}
