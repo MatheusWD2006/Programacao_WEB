@@ -19,3 +19,15 @@ Context API – Documentação oficial: https://react.dev/learn/passing-data-dee
 React.JS: Passando dados com Context API: https://www.devmedia.com.br/react-js-passando-dados-com-context-api/42904
 
 Download do Node 22 LTS para windows: https://nodejs.org/dist/v22.14.0/node-v22.14.0-x64.msi
+
+React Router (Documentação): https://reactrouter.com/home
+
+Biblioteca React Bootstrap: https://react-bootstrap.netlify.app/
+
+NavBar da biblioteca React Bootstrap: https://react-bootstrap.netlify.app/docs/components/navbar
+
+Biblioteca CSS Bootstrap: https://getbootstrap.com/
+
+HOC ( Higher-Order Component ): https://pt-br.reactjs.org/docs/higher-order-components.html#gatsby-focus-wrapper
+
+How to Persist React State in Local Storage: https://felixgerschau.com/react-localstorage/
