@@ -31,3 +31,5 @@ Biblioteca CSS Bootstrap: https://getbootstrap.com/
 HOC ( Higher-Order Component ): https://pt-br.reactjs.org/docs/higher-order-components.html#gatsby-focus-wrapper
 
 How to Persist React State in Local Storage: https://felixgerschau.com/react-localstorage/
+
+topico4
