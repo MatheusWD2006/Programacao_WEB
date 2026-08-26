@@ -1,4 +1,4 @@
 import withAuth from "./withAuth";
-import CalculadoraIMC from "./CalculadoraIMC";
+import CalculadoraICMS from "./App_icms";
 
-export default withAuth(CalculadoraIMC);
+export default withAuth(CalculadoraICMS);

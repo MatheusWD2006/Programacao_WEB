@@ -5,7 +5,7 @@ import TelaPessoa from "./TelaPessoa.jsx";
 import TelaHoras from "./TelaHoras.jsx";
 import TelaResultado from "./TelaResultado.jsx";
 
-function App() {
+function CalculadoraICMS() {
   const [tela, setTela] = useState(1);
 
   const [nome, setNome] = useState("");
@@ -75,4 +75,4 @@ function App() {
   );
 }
 
-export default App;
+export default CalculadoraICMS;

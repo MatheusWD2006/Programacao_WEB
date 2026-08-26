@@ -18,7 +18,7 @@ const MenuPrivado = () => {
           <Nav className="me-auto">
             <NavLink className="nav-link" to="/privado">Home</NavLink>
             <NavLink className="nav-link" to="/privado/usuario">Usuário</NavLink>
-            <NavLink className="nav-link" to="/privado/calculadora">Calculadora IMC</NavLink>
+            <NavLink className="nav-link" to="/privado/calculadora">Calculadora ICMS</NavLink>
           </Nav>
           <Navbar.Text className="me-3">
             Logado como: <strong>{usuario}</strong>
