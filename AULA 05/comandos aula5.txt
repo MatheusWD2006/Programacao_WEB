@@ -1,0 +1,5 @@
+npm init -y numa pasta recem criada sem nada
+npm i cors express
+vai no package.json e o start fica node index.js. "start":"node index.js"
+npm i -D nodemon
+npm run start:dev
