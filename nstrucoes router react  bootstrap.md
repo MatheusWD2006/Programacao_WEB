@@ -20,6 +20,11 @@ Para utilizar o **React Bootstrap** na aplicação React, instale os dois pacote
 npm i bootstrap react-bootstrap
 ```
 
+```bash
+npm i react-router-dom bootstrap react-bootstrap
+```
+
+
 ### Importando o CSS do Bootstrap
 
 No componente principal da aplicação, ou no arquivo onde o Bootstrap será utilizado, adicione:

@@ -1,0 +1,54 @@
+const http = require('http');
+const qurl = require('url');
+
+const app = http.createServer((request, response) => {
+    let headers = request.headers;
+    let method = request.method;
+    seja url = solicitação.url;
+    se (url === "/") {
+        se (método === "GET"){
+            response.writeHead(200, { "Content-Type": "text/html" });
+            resposta.escrever("<h1>Servidor web com nó</h1>");
+            response.write("<h1>Utilizando o pacote HTTP</h1>");
+            resposta.write("<h1>CABEÇALHOS: " + JSON.stringify(cabeçalhos) + "</h1>");
+            resposta.escrever("<h1>MÉTODO: " + método + "</h1>");
+            resposta.escrever("<h1>URL: " + url + "</h1>");
+            resposta.fim();
+        } else if (method === "POST"){
+            request.on('data', body => {
+                response.writeHead(200, { "Content-Type": "text/html" });
+                resposta.escrever("<h1>Servidor web com nó</h1>");
+                response.write("<h1>Utilizando o pacote HTTP</h1>");                
+                resposta.escrever("<h1>MÉTODO: " + método + "</h1>");
+                resposta.escrever("<h1>URL: " + url + "</h1>");
+                resposta.escrever("<h1>Corpo: " + corpo + "</h1>");
+                resposta.fim();                
+            })
+        }
+
+    } else if (url === "/sobre") {
+        response.writeHead(200, { "Content-Type": "text/html" });
+        response.write("<h1>Usando o nó HTTP com em PW - 2023</h1>");
+        resposta.fim();
+    } else if (url.includes("/imc")) {
+        const queryObject = qurl.parse(request.url,true).query;
+        deixe peso = queryObject['peso'];
+        let altura = queryObject['altura'];
+        seja imc = peso / (altura * altura);
+        response.writeHead(200, { "Content-Type": "text/html" });
+        resposta.escrever("<h1>IMC</h1>");
+        resposta.escrever("<h1>URL: " + url + "</h1>");
+        resposta.escrever("<h1>Valor do IMC: " + imc + "</h1>");
+        // para testar http://localhost:8000/imc?peso=88&altura=1.84
+        resposta.fim();
+    } outro {
+        resposta.writeHead(404, { "Content-Type": "text/html" });
+        resposta.write("<h1>404 - Não encontrado</h1>");
+        resposta.fim();
+    }
+
+});
+
+app.listen(8000);
+
+console.log("Servidor rodando na porta 8000");
