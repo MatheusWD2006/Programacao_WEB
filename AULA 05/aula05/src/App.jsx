@@ -1,4 +1,7 @@
+import Livros from "./Livros";
+
 const { useState } = require("react");
+
 
 function App() {
   const [mensagem, setMensagem] = useState("");
@@ -32,6 +35,10 @@ function App() {
       <h1>{mensagem}</h1>
       <button onClick={getOla}>Ola</button>
       <button onClick={pegaDados}>Pega Dados</button>
+      <hr />
+
+      
+      <Livros />
     </div>
   );
 }
