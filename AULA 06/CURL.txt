@@ -1,0 +1,17 @@
+ OBTER CATEGORIAS
+curl -X GET localhost:3002/categoria
+
+- OBTER CATEGORIAS POR CÓDIGO
+curl -X GET http://localhost:3002/categoria/2
+
+- EXCLUIR CATEGORIAS
+curl -X DELETE http://localhost:3002/categoria/34
+
+- CATEGORIA DA POSTAGEM
+
+curl -X POST -H "Content-Type: application/json" -d "{\"nome\":\"Baterias\"}" http://localhost:3002/categoria
+
+- COLETAR CATEGORIA
+
+curl -X PUT -H "Content-Type: application/json" -d "{\"codigo\":\"5\",\"nome\":\"Baterias recarregáveis\"}" http://localhost:3002/categoria
+

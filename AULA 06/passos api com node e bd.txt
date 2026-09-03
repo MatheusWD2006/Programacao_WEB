@@ -1,0 +1,350 @@
+Criação de uma API com express que acessa um banco de dados, aplicando conceitos de Clean Code
+Banco de dados da API
+Criar um banco de dados chamado eshoppw
+
+Criar as tabelas dos banco de dados com o comando SQL abaixo:
+
+sql
+create table categorias (
+   codigo serial not null primary key, 
+   nome varchar (40) not null
+);
+
+create table produtos (
+   codigo serial not null primary key, 
+   nome varchar (50) not null,
+   descricao text, 
+   quantidade_estoque integer,
+   check (quantidade_estoque >= 0),
+   ativo boolean not null, 
+   valor numeric(12,2) not null, 
+   check (valor >= 0),
+   data_cadastro date not null, 
+   categoria integer not null, 
+   foreign key (categoria) references categorias (codigo)
+);
+Insira alguns registros nas tabelas com os comandos SQL abaixo:
+
+sql
+-- categorias 
+insert into categorias (nome) values ('Eletrônicos') , ('Eletrodomésticos') , ('Informática');
+
+-- produtos
+
+insert into produtos (nome, descricao, quantidade_estoque, ativo, valor, data_cadastro, categoria)
+values ('Mouse USB','Mouse USB', 20, true, 60.0, current_date,1), 
+('Mouse Sem FIO','Mouse sem fio', 10, true, 120.0, current_date,1),
+('Teclado USB','Teclado USB', 30, true, 500.0, current_date,1);
+Criação da API
+Crie uma pasta chamada eshop_api
+
+Entre na pasta usando o VSCode ou digite code . no console dentro da pasta para abrir o VSCode nela.
+
+Dentro do VSCode, acesse a opção terminal e digite o código abaixo para criar o arquivo package.json
+
+text
+npm init -y
+Após, digite os comandos abaixo no terminal para adicionar no arquivo package.json do projeto as dependências que serão necessárias:
+
+text
+npm i cors express pg
+npm i -D nodemon
+Para executar o projeto, será necessário adicionar dois comandos que irão executar o projeto, o start para executar em produção e o start:dev para executar enquanto o projeto estiver em desenvolvimento, com a biblioteca nodemon. Para isso adicione no elemento scripts o seguinte conteúdo
+
+javascript
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",  
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+O código completo do arquivo package.json deve estar da seguinte maneira:
+
+Arquivo package.js
+javascript
+{
+  "name": "eshopapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",  
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
+Arquivo config.js
+Crie o arquivo config.js na raiz do código fonte. Ele contém as definições para conexão com o banco de dados localmente e na nuvem. Ele deve ter o seguinte conteúdo: (/config.js)
+
+javascript
+const { Pool } = require('pg')
+
+const isProduction = process.env.NODE_ENV === 'production'
+
+let pool = null;
+if (isProduction) {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL, ssl: {
+      rejectUnauthorized: false,
+    }
+  })
+} else {
+  pool = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'eshoppw',
+    password: 'postgres',
+    port: 5432
+  })
+}
+
+module.exports = { pool }
+Arquivo categoria.js
+Crie o arquivo categoria.js dentro da pasta entities. Ele especifica que os campos que objetos do tipo categoria deverão ter. Ele deve ter o seguinte conteúdo: (/entities/categoria.js)
+
+javascript
+class Categoria {
+    constructor(codigo, nome) {
+        this.codigo = codigo;
+        this.nome = nome;
+    }
+}
+
+module.exports = Categoria;
+Arquivo categoriaUseCases.js
+Crie o arquivo categoriaUseCases.js dentro da pasta usecases. Ele vai conter as consultas SQL para manipular a tabelas categorias. Ele deve ter o seguinte conteúdo: (/usecases/categoriaUseCases.js)
+
+javascript
+const { pool } = require('../config');
+const Categoria = require('../entities/categoria')
+
+const getCategoriasDB = async () => {
+    try {    
+        const { rows } = await pool.query('SELECT * FROM categorias ORDER BY nome');
+        return rows.map((categoria) => new Categoria(categoria.codigo, categoria.nome));        
+    } catch (err) {
+        throw "Erro : " + err;
+    }
+}
+
+module.exports = {
+    getCategoriasDB
+}
+Arquivo categoriaController.js
+Crie o arquivo categoriaController.js dentro da pasta controllers. Ele vai ser responsável por tratar as requisições e respostas HTTP. Ele deve ter o seguinte conteúdo: (/controllers/categoriaController.js)
+
+javascript
+const { getCategoriasDB } = require('../usecases/categoriaUseCases')
+
+const getCategorias = async (request, response) => {
+    await getCategoriasDB()
+        .then(data => response.status(200).json(data))
+        .catch(err => response.status(400).json({
+            status: 'error',
+            message: 'Erro ao consultar as categorias: ' + err
+        }));
+}
+
+module.exports = {
+    getCategorias
+}
+Arquivo rotasCategorias.js
+Crie o arquivo rotasCategorias.js dentro da pasta routes. Ele vai ser responsável criar as rotas para os endpoints da api, associando uma rotas e um verbo do HTTP a execução de um método. Ele deve ter o seguinte conteúdo: (/routes/rotasCategorias.js)
+
+javascript
+const { Router } = require('express');
+
+const { getCategorias } = require('../controllers/categoriaController');
+
+const rotasCategorias = new Router();
+
+rotasCategorias.route('/categoria')
+   .get(getCategorias)
+
+module.exports = { rotasCategorias };
+Arquivo rotas.js
+Crie o arquivo rotas.js dentro da pasta routes. Ele vai ser responsável por agrupar as todas as rotas da API. Ele deve ter o seguinte conteúdo: (/routes/rotas.js)
+
+javascript
+const { Router } = require('express');
+
+const { rotasCategorias } = require('./rotasCategorias');
+
+const rotas = new Router();
+
+rotas.use(rotasCategorias);
+
+module.exports = rotas;
+Arquivo index.js
+Crie o arquivo index.js na raiz da aplicação. Ele é o arquivo principal, que executa a API. Ele deve ter o seguinte conteúdo: (/index.js)
+
+javascript
+const express = require('express')
+const cors = require('cors')
+const rotas = require('./routes/rotas')
+
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+app.use(cors());
+
+app.use(rotas);
+
+app.listen(process.env.PORT || 3002, () => {
+    console.log('Servidor da API rodando....')
+})
+Execute o comando abaixo para inicar a API em modo de desenvolvimento:
+
+text
+npm run start:dev
+Adicione no o arquivo categoriaUseCases.js as operações CRUD restantes
+Modifique o arquivo categoriaUseCases.js adicionado os métodos para executar as outras operações CRUD. (/usecases/categoriaUseCases.js)
+
+javascript
+const addCategoriaDB = async (body) => {
+    try {   
+        const { nome } = body; 
+        const results = await pool.query(`INSERT INTO categorias (nome) 
+            VALUES ($1)
+            returning codigo, nome`,
+        [nome]);
+        const categoria = results.rows[0];
+        return new Categoria(categoria.codigo, categoria.nome); 
+    } catch (err) {
+        throw "Erro ao inserir a categoria: " + err;
+    }    
+}
+
+
+const updateCategoriaDB = async (body) => {
+    try {   
+        const { codigo, nome }  = body; 
+        const results = await pool.query(`UPDATE categorias set nome = $2 where codigo = $1 
+        returning codigo, nome`,
+        [codigo, nome]);        
+        if (results.rowCount == 0){
+            throw `Nenhum registro encontrado com o código ${codigo} para ser alterado`;
+        }
+        const categoria = results.rows[0];
+        return new Categoria(categoria.codigo, categoria.nome); 
+    } catch (err) {
+        throw "Erro ao alterar a categoria: " + err;
+    }      
+}
+
+const deleteCategoriaDB = async (codigo) => {
+    try {           
+        const results = await pool.query(`DELETE FROM categorias where codigo = $1`,
+        [codigo]);
+        if (results.rowCount == 0){
+            throw `Nenhum registro encontrado com o código ${codigo} para ser removido`;
+        } else {
+            return "Categoria removida com sucesso";
+        }       
+    } catch (err) {
+        throw "Erro ao remover a categoria: " + err;
+    }     
+}
+
+const getCategoriaPorCodigoDB = async (codigo) => {
+    try {           
+        const results = await pool.query(`SELECT * FROM categorias where codigo = $1`,
+        [codigo]);
+        if (results.rowCount == 0){
+            throw "Nenhum registro encontrado com o código: " + codigo;
+        } else {
+            const categoria = results.rows[0];
+            return new Categoria(categoria.codigo, categoria.nome); 
+        }       
+    } catch (err) {
+        throw "Erro ao recuperar a categoria: " + err;
+    }     
+}
+
+module.exports = {
+    getCategoriasDB, addCategoriaDB, updateCategoriaDB, deleteCategoriaDB, getCategoriaPorCodigoDB
+}
+Adicione no o arquivo categoriaController.js os tratamentos para as requisições das operações CRUD restantes
+Modifique o arquivo categoriaController.js para tratar as requisições das operações CRUD restantes. (/controllers/categoriaController.js)
+
+javascript
+const { getCategoriasDB, addCategoriaDB, updateCategoriaDB, deleteCategoriaDB, getCategoriaPorCodigoDB } = require('../usecases/categoriaUseCases')
+
+const addCategoria = async (request, response) => {
+    await addCategoriaDB(request.body)
+        .then(data => response.status(200).json({
+            status: "success", message: "Categoria criada",
+            objeto: data
+        }))
+        .catch(err => response.status(400).json({
+            status: 'error',
+            message: err
+        }));
+}
+
+const updateCategoria = async (request, response) => {
+    await updateCategoriaDB(request.body)
+        .then(data => response.status(200).json({
+            status: "success", message: "Categoria alterada",
+            objeto: data
+        }))
+        .catch(err => response.status(400).json({
+            status: 'error',
+            message: err
+        }));
+}
+
+const deleteCategoria = async (request, response) => {
+    await deleteCategoriaDB(parseInt(request.params.codigo))
+        .then(data => response.status(200).json({
+            status: "success", message: data
+        }))
+        .catch(err => response.status(400).json({
+            status: 'error',
+            message: err
+        }));        
+}
+
+const getCategoriaPorCodigo= async (request, response) => {
+    await getCategoriaPorCodigoDB(parseInt(request.params.codigo))
+        .then(data => response.status(200).json(data))
+        .catch(err => response.status(400).json({
+            status: 'error',
+            message: err
+        }));           
+}
+
+module.exports = {
+   getCategorias, addCategoria, updateCategoria, deleteCategoria, getCategoriaPorCodigo
+}
+Mapeandos as rotas das outras operações CRUD no arquivo rotasCategorias.js
+Modifique o arquivo rotasCategorias.js para mapear as operações CRUD restantes, associando as rotas, verbos do HTTP e métodos. (/routes/rotasCategorias.js)
+
+javascript
+const { Router } = require('express');
+
+const { getCategorias, addCategoria, updateCategoria, deleteCategoria, getCategoriaPorCodigo } = require('../controllers/categoriaController');
+
+const rotasCategorias = new Router();
+
+rotasCategorias.route('/categoria')
+   .get(getCategorias)
+   .post(addCategoria)
+   .put(updateCategoria)
+
+rotasCategorias.route('/categoria/:codigo')
+   .get(getCategoriaPorCodigo)
+   .delete(deleteCategoria)
+
+module.exports = { rotasCategorias };

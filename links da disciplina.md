@@ -48,3 +48,29 @@ Introdução ao Express - Criando uma API com Express: https://www.youtube.com/w
 
 Postman: https://www.postman.com/downloads/
 
+
+API com Express, PostgreSQL e Clean Code - Aula 01 - Criação do banco de dados e configurações iniciais do projeto: https://youtu.be/6EEunzjAFo8?si=cg_xMTRLwJiKDJmC
+
+
+API com Express, PostgreSQL e Clean Code - Aula 02 - Criação da entitite, usecases e controller para Categoria: https://youtu.be/YNye4UvCFYU?si=zTZPsnvfMWPe7m5F
+
+
+API com Express, PostgreSQL e Clean Code - Aula 03 - Criação das rotas e do arquivo principal da API (index.js): https://youtu.be/7Z8pX5nTYw0?si=-kzPgX8suLNNaziR
+
+
+API com Express, PostgreSQL e Clean Code - Aula 04 - Criação das rotas e do arquivo principal da API (index.js): https://youtu.be/DmKy-8tN2ZQ?si=x_3gUWcm_grPrLnD
+
+
+API com Express, PostgreSQL e Clean Code - Aula 05 - Operações Add, update e delete em controller de Categoria: https://youtu.be/-5FHUy7JP20?si=7xrkMiQIO-K_H66Y
+
+
+API com Express, PostgreSQL e Clean Code - Aula 06 - Rotas para Add, update e delete de Categoria e testes no Postman: https://youtu.be/KK97J_1GNVo?si=T5IwEbYNeWTrWVy7
+
+
+
+
+
+
+
+
+

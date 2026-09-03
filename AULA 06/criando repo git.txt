@@ -1,0 +1,13 @@
+1. Criar um repositório GIT remoto (GITHUB, GITLAB, etc..) 
+
+2. Executar os comandos dentro da pasta do projeto 
+
+    1. criar o gerenciamento com o git: git init
+
+    2. Adicionar os arquivos: git add * 
+
+    3. Fazer um commit: git commit -m 'Commit inicial do projeto' 
+
+    4. Adicionar o repositório remoto: git remote add origin 
+
+    5. Enviar projeto ao repositório remoto: git push -u origin master
