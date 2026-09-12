@@ -1,0 +1,71 @@
+1. Comandos do Git
+Configuração Inicial (Uma pasta nova -> GitHub)
+Execute na pasta pai do projeto na primeira vez que for enviar para o GitHub.
+
+git init
+
+Transforma a pasta atual em um repositório Git local.
+
+git add .
+
+Prepara todos os arquivos novos e alterados da pasta para o próximo commit (o ponto indica "tudo nesta pasta").
+
+git commit -m "Mensagem inicial"
+
+Salva uma foto (snapshot) do estado atual do seu código com uma mensagem descritiva.
+
+git branch -M main
+
+Garante que o nome da sua ramificação principal seja main (padrão do GitHub).
+
+git remote add origin URL_DO_REPOSITORIO
+
+Conecta sua pasta local ao repositório vazio criado lá no GitHub.
+
+git push -u origin main
+
+Envia os commits locais para o GitHub. A opção -u grava a conexão para você não precisar digitar o endereço nas próximas vezes.
+
+Fluxo do Dia a Dia (Para enviar atualizações)
+Depois da configuração inicial, use apenas esta sequência para atualizar o repositório:
+
+git add . (Prepara as alterações)
+
+git commit -m "Sua mensagem aqui" (Salva a versão)
+
+git push (Envia ao GitHub)
+
+2. Comandos do Terminal (Navegação de Pastas)
+Navegar e Mudar de Diretório
+cd ..
+
+Sobe um nível de pasta (sai da pasta atual e vai para a pasta acima dela).
+
+cd nome-da-pasta
+
+Entra na pasta indicada.
+
+cd ~
+
+Leve você direto para a pasta pessoal do usuário (terminal "neutro").
+
+cd /
+
+Vai para a raiz do sistema/disco.
+
+Criar e Visualizar Arquivos/Pastas
+mkdir nome-da-pasta
+
+Cria uma nova pasta no diretório atual.
+
+ls (no Linux/Mac ou Git Bash) ou dir (no Prompt de Comando do Windows)
+
+Lista todas as pastas e arquivos que estão dentro do diretório atual.
+
+pwd
+
+Mostra o caminho completo da pasta em que você está no momento.
+
+code .
+
+Abre a pasta atual onde seu terminal está posicionado direto no VS Code.
