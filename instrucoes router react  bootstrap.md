@@ -124,6 +124,7 @@ O menu acima possui as seguintes opções:
 
 ## Principais componentes utilizados
 
+
 * `NavLink` → cria links para navegação entre rotas.
 * `Navbar.Toggle` → botão para abrir/fechar o menu, principalmente em telas menores.
 * `Navbar.Collapse` → área que pode ser expandida ou recolhida.
