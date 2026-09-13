@@ -69,3 +69,26 @@ Mostra o caminho completo da pasta em que você está no momento.
 code .
 
 Abre a pasta atual onde seu terminal está posicionado direto no VS Code.
+
+git pull origin main --allow-unrelated-histories
+
+git push -u origin main
+
+git push -u origin main --force
+
+Isso é perfeitamente normal! O Git abriu o editor de texto (Vim) para você confirmar a mensagem do commit de merge que une o histórico do GitHub com o seu código local.
+
+Você só precisa salvar e fechar a tela.
+
+Se o editor for o Vim (padrão do terminal):
+Pressione a tecla Esc no seu teclado.
+
+Digite :wq (o : aciona o comando, w salva e q sai).
+
+Pressione Enter.
+
+O que fazer depois de sair da tela:
+O terminal voltará para o PowerShell e o merge estará concluído. Em seguida, basta enviar seu código final para o GitHub executando:
+
+Bash
+git push -u origin main
