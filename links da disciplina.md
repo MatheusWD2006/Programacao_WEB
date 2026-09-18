@@ -67,6 +67,15 @@ API com Express, PostgreSQL e Clean Code - Aula 05 - Operações Add, update e d
 API com Express, PostgreSQL e Clean Code - Aula 06 - Rotas para Add, update e delete de Categoria e testes no Postman: https://youtu.be/KK97J_1GNVo?si=T5IwEbYNeWTrWVy7
 
 
+Icones do Bootstratp:https://icons.getbootstrap.com/
+
+
+Ícones do Bootstrap: https://icons.getbootstrap.com/
+
+
+
+
+
 
 
 

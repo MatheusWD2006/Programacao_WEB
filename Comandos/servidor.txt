@@ -1,0 +1,25 @@
+# 1. Cria o arquivo package.json inicial com as configurações padrão
+npm init -y
+
+# 2. Instala as dependências de produção (Express, Cors e PG)
+npm install express cors pg
+
+# 3. Instala o Nodemon como dependência de desenvolvimento (apenas para recarregar o código ao salvar)
+npm install -D nodemon
+
+
+# 1. Cria o arquivo package.json inicial com as configurações padrão
+yarn init -y
+
+# 2. Instala as dependências de produção (Express, Cors e PG)
+yarn add express cors pg
+
+# 3. Instala o Nodemon como dependência de desenvolvimento
+yarn add -D nodemon
+
+
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "start:dev": "nodemon --exec tsx server.js"
+  }, no package.json

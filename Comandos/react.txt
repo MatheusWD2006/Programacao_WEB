@@ -1,0 +1,20 @@
+# 1. Cria o projeto React tradicional
+npx create-react-app meu-frontend
+
+# 2. Entra na pasta do projeto
+cd meu-frontend
+
+# 3. Instala as bibliotecas (React Router, React Bootstrap e Bootstrap CSS)
+npm install react-router-dom react-bootstrap bootstrap
+
+# 1. Cria o projeto React usando o Yarn
+yarn create react-app meu-frontend
+
+# 2. Entra na pasta do projeto
+cd meu-frontend
+
+# 3. Instala as bibliotecas
+yarn add react-router-dom react-bootstrap bootstrap
+
+no index.js para usar bootstrap:
+import 'bootstrap/dist/css/bootstrap.min.css';

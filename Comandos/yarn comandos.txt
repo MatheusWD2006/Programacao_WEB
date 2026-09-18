@@ -1,0 +1,11 @@
+npm install --global yarn
+
+yarn start
+
+yarn add bootstrap bootstrap-icons react-bootstrap react-router-dom
+
+yarn create react-app eshop-frontend --template cra-template-pwa   
+
+Caso o yarn não esteja sendo reconhecido executar estes comandos:
+Set-ExecutionPolicy AllSigned  
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
