@@ -7,14 +7,20 @@ import {
   cadastraCategoriaAPI,
 } from "../../../services/CategoriaServico";
 import Tabela from "./Tabela";
-import Formulario from './Formulario';
+import Formulario from "./Formulario";
+import Carregando from "../../common/Carregando";
 
 function Categoria() {
   const [alerta, setAlerta] = useState({ status: "", message: "" });
   const [listaObjetos, setListaObjetos] = useState([]);
+  const [carregando, setCarregando] = useState(true);
 
   const recuperaCategorias = async () => {
+    setCarregando(true);
+
     setListaObjetos(await getCategoriasAPI());
+
+    setCarregando(false);
   };
 
   const remover = async (codigo) => {
@@ -30,88 +36,90 @@ function Categoria() {
   }, []);
 
   // Novos estados e métodos
-const [editar, setEditar] = useState(false);
-const [exibirForm, setExibirForm] = useState(false);
+  const [editar, setEditar] = useState(false);
+  const [exibirForm, setExibirForm] = useState(false);
 
-const [objeto, setObjeto] = useState({
-    codigo: "", 
-    nome: "", 
-    descricao: "", 
-    sigla: ""
-});
+  const [objeto, setObjeto] = useState({
+    codigo: "",
+    nome: "",
+    descricao: "",
+    sigla: "",
+  });
 
-const novoObjeto = () => {
+  const novoObjeto = () => {
     setEditar(false);
     setAlerta({ status: "", message: "" });
     setObjeto({
-        codigo: 0,
-        nome: ""
+      codigo: 0,
+      nome: "",
     });
     setExibirForm(true);
-}
+  };
 
-const editarObjeto = async codigo => {
+  const editarObjeto = async (codigo) => {
     setObjeto(await getCategoriaPorCodigoAPI(codigo));
     setEditar(true);
     setAlerta({ status: "", message: "" });
     setExibirForm(true);
-}
+  };
 
-const acaoCadastrar = async e => {
+  const acaoCadastrar = async (e) => {
     e.preventDefault();
     const metodo = editar ? "PUT" : "POST";
 
     try {
-        let retornoAPI = await cadastraCategoriaAPI(objeto, metodo);
+      let retornoAPI = await cadastraCategoriaAPI(objeto, metodo);
 
-        setAlerta({
-            status: retornoAPI.status,
-            message: retornoAPI.message
-        });
+      setAlerta({
+        status: retornoAPI.status,
+        message: retornoAPI.message,
+      });
 
-        setObjeto(retornoAPI.objeto);
+      setObjeto(retornoAPI.objeto);
 
-        if (!editar) {
-            setEditar(true);
-        }
+      if (!editar) {
+        setEditar(true);
+      }
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
     }
 
     recuperaCategorias();
-}
+  };
 
-const handleChange = (e) => {
+  const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
 
     setObjeto({
-        ...objeto,
-        [name]: value
+      ...objeto,
+      [name]: value,
     });
-}
+  };
 
-// Adicionando no value do Provider os novos estados e métodos
-// para uso dos componentes filhos
-return (
-    <CategoriaContext.Provider value={
-        {
-            listaObjetos,
-            alerta,
-            remover,
-            objeto,
-            editarObjeto,
-            acaoCadastrar,
-            handleChange,
-            novoObjeto,
-            exibirForm,
-            setExibirForm
-        }
-    }>
+  // Adicionando no value do Provider os novos estados e métodos
+  // para uso dos componentes filhos
+  return (
+    <CategoriaContext.Provider
+      value={{
+        listaObjetos,
+        alerta,
+        remover,
+        objeto,
+        editarObjeto,
+        acaoCadastrar,
+        handleChange,
+        novoObjeto,
+        exibirForm,
+        setExibirForm,
+      }}
+    >
+      <Carregando carregando={carregando}>
         <Tabela />
-        <Formulario />
+      </Carregando>
+      <Formulario />
     </CategoriaContext.Provider>
-);
+  );
 }
 
 export default Categoria;
