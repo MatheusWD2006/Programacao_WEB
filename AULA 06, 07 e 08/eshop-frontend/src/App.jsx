@@ -10,6 +10,7 @@ import Menu from "./components/Menu";
 import Home from "./components/view/Home";
 import Categoria from "./components/view/categoria/Categoria";
 import Produto from "./components/view/produto/Produto";
+import Sobre from "./components/view/Sobre"; // 1. Importar o componente Sobre
 
 const router = createBrowserRouter([
     {
@@ -17,22 +18,22 @@ const router = createBrowserRouter([
         element: <Menu />,
 
         children: [
-
             {
                 index: true,
                 element: <Home />,
             },
-
             {
                 path: "categorias",
                 element: <Categoria/>
             },
-
             {
                 path: "produtos",
                 element: <Produto/>
+            },
+            {
+                path: "sobre", 
+                element: <Sobre/>
             }
-
         ]
     }
 ]);
