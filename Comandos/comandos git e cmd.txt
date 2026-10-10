@@ -24,6 +24,10 @@ Conecta sua pasta local ao repositório vazio criado lá no GitHub.
 
 git push -u origin main
 
+Se der erro:
+git branch -M main
+git push -u origin main
+
 Envia os commits locais para o GitHub. A opção -u grava a conexão para você não precisar digitar o endereço nas próximas vezes.
 
 Fluxo do Dia a Dia (Para enviar atualizações)
